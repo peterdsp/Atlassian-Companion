@@ -4,20 +4,331 @@
   <meta charset="UTF-8">
   <title>Atlassian Companion</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
-      border: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f5f6fa;
+      color: #172b4d;
     }
-    iframe {
+    
+    .header {
+      background-color: #0052cc;
+      color: white;
+      padding: 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .container {
+      padding: 16px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    
+    .setup-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .setup-section h3 {
+      margin: 0 0 16px 0;
+      color: #172b4d;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #44546f;
+    }
+    
+    input[type="text"], input[type="url"] {
       width: 100%;
-      height: 100%;
+      padding: 8px 12px;
+      border: 2px solid #dfe1e6;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    
+    input[type="text"]:focus, input[type="url"]:focus {
+      outline: none;
+      border-color: #0052cc;
+    }
+    
+    .btn {
+      background-color: #0052cc;
+      color: white;
       border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      width: 100%;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: #0747a6;
+    }
+    
+    .btn:disabled {
+      background-color: #dfe1e6;
+      color: #7a869a;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    
+    .status.success {
+      background-color: #e3fcef;
+      color: #006644;
+      border: 1px solid #00875a;
+    }
+    
+    .status.error {
+      background-color: #ffebe6;
+      color: #bf2600;
+      border: 1px solid #de350b;
+    }
+    
+    .boards-section {
+      display: none;
+    }
+    
+    .board-item {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    
+    .board-item:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    
+    .board-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .board-key {
+      color: #7a869a;
+      font-size: 12px;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #7a869a;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
-  <iframe src="https://id.atlassian.com/login"></iframe>
+  <div class="header">
+    <div>🏢 Atlassian Companion</div>
+  </div>
+  
+  <div class="container">
+    <div id="status" class="status"></div>
+    
+    <div id="setup" class="setup-section">
+      <h3>Connect to Your Atlassian Instance</h3>
+      
+      <div class="form-group">
+        <label for="instanceUrl">Atlassian Instance URL</label>
+        <input type="url" id="instanceUrl" placeholder="https://your-company.atlassian.net" />
+        <div class="help-text">Enter your Atlassian Cloud instance URL</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="apiToken">API Token</label>
+        <input type="text" id="apiToken" placeholder="Your Atlassian API token" />
+        <div class="help-text">
+          <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank">
+            Create an API token here
+          </a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="text" id="email" placeholder="your-email@company.com" />
+        <div class="help-text">Your Atlassian account email</div>
+      </div>
+      
+      <button class="btn" onclick="connectToAtlassian()">Connect</button>
+    </div>
+    
+    <div id="boards" class="boards-section">
+      <div class="setup-section">
+        <h3>Your Boards</h3>
+        <div id="boardsList">
+          <!-- Boards will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load saved configuration
+    window.addEventListener('DOMContentLoaded', function() {
+      chrome.storage.sync.get(['instanceUrl', 'email'], function(result) {
+        if (result.instanceUrl) {
+          document.getElementById('instanceUrl').value = result.instanceUrl;
+        }
+        if (result.email) {
+          document.getElementById('email').value = result.email;
+        }
+        
+        // Check if we have a saved token
+        chrome.storage.sync.get(['apiToken'], function(tokenResult) {
+          if (tokenResult.apiToken && result.instanceUrl && result.email) {
+            loadBoards();
+          }
+        });
+      });
+    });
+
+    function showStatus(message, type) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.className = `status ${type}`;
+      status.style.display = 'block';
+      
+      if (type === 'success') {
+        setTimeout(() => {
+          status.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    async function connectToAtlassian() {
+      const instanceUrl = document.getElementById('instanceUrl').value.trim();
+      const apiToken = document.getElementById('apiToken').value.trim();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!instanceUrl || !apiToken || !email) {
+        showStatus('Please fill in all fields', 'error');
+        return;
+      }
+      
+      // Validate URL format
+      try {
+        new URL(instanceUrl);
+      } catch (e) {
+        showStatus('Please enter a valid URL', 'error');
+        return;
+      }
+      
+      try {
+        // Test the connection
+        const auth = btoa(`${email}:${apiToken}`);
+        const response = await fetch(`${instanceUrl}/rest/api/3/myself`, {
+          headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Authentication failed');
+        }
+        
+        // Save credentials
+        chrome.storage.sync.set({
+          instanceUrl: instanceUrl,
+          apiToken: apiToken,
+          email: email
+        }, function() {
+          showStatus('Connected successfully!', 'success');
+          loadBoards();
+        });
+        
+      } catch (error) {
+        showStatus('Connection failed. Please check your credentials.', 'error');
+      }
+    }
+
+    async function loadBoards() {
+      try {
+        const config = await new Promise(resolve => {
+          chrome.storage.sync.get(['instanceUrl', 'apiToken', 'email'], resolve);
+        });
+        
+        if (!config.instanceUrl || !config.apiToken || !config.email) {
+          return;
+        }
+        
+        const auth = btoa(`${config.email}:${config.apiToken}`);
+        const response = await fetch(`${config.instanceUrl}/rest/agile/1.0/board`, {
+          headers: {
+            'Authorization': `Basic ${auth}`,
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to load boards');
+        }
+        
+        const data = await response.json();
+        displayBoards(data.values || []);
+        
+        document.getElementById('setup').style.display = 'none';
+        document.getElementById('boards').style.display = 'block';
+        
+      } catch (error) {
+        showStatus('Failed to load boards', 'error');
+      }
+    }
+
+    function displayBoards(boards) {
+      const boardsList = document.getElementById('boardsList');
+      
+      if (boards.length === 0) {
+        boardsList.innerHTML = '<p>No boards found.</p>';
+        return;
+      }
+      
+      boardsList.innerHTML = boards.map(board => `
+        <div class="board-item" onclick="openBoard('${board.id}', '${board.name}')">
+          <div class="board-name">${board.name}</div>
+          <div class="board-key">${board.type} • ID: ${board.id}</div>
+        </div>
+      `).join('');
+    }
+
+    function openBoard(boardId, boardName) {
+      chrome.storage.sync.get(['instanceUrl'], function(result) {
+        if (result.instanceUrl) {
+          const boardUrl = `${result.instanceUrl}/secure/RapidBoard.jspa?rapidView=${boardId}`;
+          chrome.tabs.create({ url: boardUrl });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -14,6 +14,9 @@
   "permissions": [
     "tabs",
     "storage",
-    "https://*.atlassian.net/*"
-  ]
+    "https://*.atlassian.net/*",
+    "https://*.atlassian.com/*",
+    "https://id.atlassian.com/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-inline'; object-src 'self'"
 }

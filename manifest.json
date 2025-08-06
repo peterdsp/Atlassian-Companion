@@ -1,7 +1,7 @@
 {
   "name": "Atlassian Companion",
   "description": "Access your Atlassian boards and issues directly from the Opera sidebar.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "sidebar_action": {
     "default_title": "Atlassian Companion",

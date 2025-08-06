@@ -29,12 +29,6 @@ Access your Atlassian boards, issues, and recent tasks right from your Opera sid
 
 ---
 
-## 💡 Tip
-
-For best experience, use [Atlassian’s mobile UI](https://id.atlassian.com/login) — the extension automatically loads it in the sidebar for optimal layout.
-
----
-
 ## 📬 Support
 
 Need help or want to suggest features? Reach out at: [peterdsp.dev](https://peterdsp.dev)

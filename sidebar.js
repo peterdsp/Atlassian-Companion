@@ -1,21 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const iframe = document.getElementById('webview');
-  const loading = document.getElementById('loading');
+  const loginBtn = document.getElementById('loginBtn');
+  const jiraBtn = document.getElementById('jiraBtn');
+  const confluenceBtn = document.getElementById('confluenceBtn');
+  const bitbucketBtn = document.getElementById('bitbucketBtn');
   
-  // Handle iframe loading states
-  iframe.addEventListener('load', function() {
-    loading.style.display = 'none';
+  // Handle button clicks
+  loginBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://id.atlassian.com/login' });
   });
   
-  iframe.addEventListener('error', function() {
-    loading.textContent = 'Failed to load Atlassian';
-    loading.style.color = '#bf2600';
+  jiraBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://atlassian.com/software/jira' });
   });
   
-  // Hide loading after a reasonable timeout if load event doesn't fire
-  setTimeout(function() {
-    if (loading.style.display !== 'none') {
-      loading.style.display = 'none';
-    }
-  }, 5000);
+  confluenceBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://atlassian.com/software/confluence' });
+  });
+  
+  bitbucketBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://bitbucket.org' });
+  });
 });

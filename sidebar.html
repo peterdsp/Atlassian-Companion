@@ -24,27 +24,8 @@
       font-size: 14px;
     }
     
-    .url-bar {
-      background-color: #f5f6fa;
-      padding: 8px 12px;
-      border-bottom: 1px solid #dfe1e6;
-    }
-    
-    .url-input {
-      width: 100%;
-      padding: 6px 10px;
-      border: 1px solid #dfe1e6;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-    
-    .url-input:focus {
-      outline: none;
-      border-color: #0052cc;
-    }
-    
     .webview-container {
-      height: calc(100vh - 80px);
+      height: calc(100vh - 48px);
       position: relative;
     }
     
@@ -69,13 +50,9 @@
     🏢 Atlassian Companion
   </div>
   
-  <div class="url-bar">
-    <input type="url" class="url-input" id="urlInput" placeholder="Enter Atlassian URL (e.g., https://yourcompany.atlassian.net)" value="https://atlassian.net">
-  </div>
-  
   <div class="webview-container">
     <div class="loading" id="loading">Loading...</div>
-    <webview class="webview" id="webview" src="https://atlassian.net"></webview>
+    <webview class="webview" id="webview" src="https://id.atlassian.com/login"></webview>
   </div>
 
   <script src="sidebar.js"></script>

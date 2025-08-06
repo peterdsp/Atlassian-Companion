@@ -151,19 +151,19 @@
     <div class="section">
       <div class="section-title">Quick Access</div>
       <div class="quick-links">
-        <button class="link-btn primary" onclick="openUrl('https://id.atlassian.com/login')">
+        <button class="link-btn primary" id="atlassianLoginBtn">
           🔐 Atlassian Login
         </button>
-        <button class="link-btn" onclick="openUrl('https://start.atlassian.com/')">
+        <button class="link-btn" id="atlassianStartBtn">
           🏠 Atlassian Start
         </button>
-        <button class="link-btn" onclick="openUrl('https://www.atlassian.com/software/jira')">
+        <button class="link-btn" id="jiraBtn">
           📋 Jira Software
         </button>
-        <button class="link-btn" onclick="openUrl('https://www.atlassian.com/software/confluence')">
+        <button class="link-btn" id="confluenceBtn">
           📚 Confluence
         </button>
-        <button class="link-btn" onclick="openUrl('https://bitbucket.org/')">
+        <button class="link-btn" id="bitbucketBtn">
           🔗 Bitbucket
         </button>
       </div>
@@ -172,7 +172,7 @@
     <div class="section">
       <div class="section-title">Custom Instance</div>
       <input type="text" class="url-input" id="customUrl" placeholder="Enter your company's Atlassian URL">
-      <button class="link-btn primary" onclick="openCustomUrl()">
+      <button class="link-btn primary" id="customInstanceBtn">
         🚀 Open Custom Instance
       </button>
       <div class="help-text">

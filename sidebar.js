@@ -1,18 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const webview = document.getElementById('webview');
+  const iframe = document.getElementById('webview');
   const loading = document.getElementById('loading');
   
-  // Handle webview loading states
-  webview.addEventListener('loadstart', function() {
-    loading.style.display = 'block';
-  });
-  
-  webview.addEventListener('loadstop', function() {
+  // Handle iframe loading states
+  iframe.addEventListener('load', function() {
     loading.style.display = 'none';
   });
   
-  webview.addEventListener('loaderror', function() {
+  iframe.addEventListener('error', function() {
     loading.textContent = 'Failed to load Atlassian';
     loading.style.color = '#bf2600';
   });
+  
+  // Hide loading after a reasonable timeout if load event doesn't fire
+  setTimeout(function() {
+    if (loading.style.display !== 'none') {
+      loading.style.display = 'none';
+    }
+  }, 5000);
 });

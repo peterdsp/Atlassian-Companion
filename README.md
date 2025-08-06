@@ -4,7 +4,7 @@ Access your Atlassian boards, issues, and recent tasks right from your Opera sid
 
 ---
 
-## ✅ Description
+## Description
 
 **Atlassian Sidebar Companion** integrates Atlassian Cloud into the Opera browser’s sidebar for instant access to your workspace. Designed for developers, product managers, and agile teams who live inside Atlassian, this extension saves time by keeping your issues and boards a single click away.
 

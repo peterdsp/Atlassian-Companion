@@ -1,12 +1,12 @@
 # Atlassian Companion
 
-Access your Jira boards, issues, and recent tasks right from your Opera sidebar — without switching tabs.
+Access your Atlassian boards, issues, and recent tasks right from your Opera sidebar — without switching tabs.
 
 ---
 
 ## ✅ Description
 
-**Jira Sidebar Companion** integrates Jira Cloud into the Opera browser’s sidebar for instant access to your workspace. Designed for developers, product managers, and agile teams who live inside Jira, this extension saves time by keeping your issues and boards a single click away.
+**Atlassian Sidebar Companion** integrates Atlassian Cloud into the Opera browser’s sidebar for instant access to your workspace. Designed for developers, product managers, and agile teams who live inside Jira, this extension saves time by keeping your issues and boards a single click away.
 
 ---
 
@@ -24,7 +24,7 @@ Access your Jira boards, issues, and recent tasks right from your Opera sidebar 
 
 1. Install the extension in Opera
 2. Pin it to your sidebar
-3. Sign in to your Jira Cloud account
+3. Sign in to your Atlassian Cloud account
 4. Start managing your tasks without opening a new tab!
 
 ---
@@ -41,4 +41,4 @@ Need help or want to suggest features? Reach out at: [peterdsp.dev](https://pete
 
 ---
 
-© 2025 — Built with ❤️ for busy teams using Jira.
+© 2025 — Built with ❤️ for busy teams using Atlassian.

@@ -1,0 +1,19 @@
+{
+  "name": "Atlassian Companion",
+  "description": "Access your Atlassian boards and issues directly from the Opera sidebar.",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "sidebar_action": {
+    "default_title": "Atlassian Companion",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    },
+    "default_panel": "sidebar.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://*.atlassian.net/*"
+  ]
+}

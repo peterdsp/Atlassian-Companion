@@ -1,4 +1,4 @@
-# Jira Companion
+# Atlassian Companion
 
 Access your Jira boards, issues, and recent tasks right from your Opera sidebar — without switching tabs.
 

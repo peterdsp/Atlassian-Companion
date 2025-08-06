@@ -13,104 +13,192 @@
     body, html {
       height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0052cc 0%, #2684ff 100%);
+      background: #f5f6fa;
+      color: #172b4d;
     }
     
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+    .header {
+      background: linear-gradient(135deg, #0052cc 0%, #2684ff 100%);
+      color: white;
       padding: 20px;
       text-align: center;
     }
     
     .logo {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 32px;
+      margin-bottom: 8px;
     }
     
     .title {
-      color: white;
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 4px;
     }
     
     .subtitle {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 16px;
-      margin-bottom: 40px;
-      max-width: 300px;
-      line-height: 1.5;
-    }
-    
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      max-width: 280px;
-    }
-    
-    .btn {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 14px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: block;
-    }
-    
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
-    }
-    
-    .btn-primary {
-      background: white;
-      color: #0052cc;
-      border-color: white;
-    }
-    
-    .btn-primary:hover {
-      background: #f4f5f7;
-      transform: translateY(-2px);
-    }
-    
-    .info {
-      color: rgba(255, 255, 255, 0.7);
       font-size: 12px;
-      margin-top: 20px;
-      max-width: 280px;
+      opacity: 0.9;
+    }
+    
+    .content {
+      padding: 20px;
+      height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #172b4d;
+    }
+    
+    .quick-links {
+      display: grid;
+      gap: 8px;
+    }
+    
+    .link-btn {
+      display: block;
+      padding: 12px 16px;
+      background: #f4f5f7;
+      border: 1px solid #dfe1e6;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #172b4d;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .link-btn:hover {
+      background: #e4e5ea;
+      border-color: #b3bac5;
+    }
+    
+    .link-btn.primary {
+      background: #0052cc;
+      color: white;
+      border-color: #0052cc;
+    }
+    
+    .link-btn.primary:hover {
+      background: #0747a6;
+      border-color: #0747a6;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f4f5f7;
+    }
+    
+    .info-item:last-child {
+      border-bottom: none;
+    }
+    
+    .info-icon {
+      font-size: 16px;
+      margin-right: 12px;
+      width: 20px;
+    }
+    
+    .info-text {
+      font-size: 14px;
+      color: #44546f;
+    }
+    
+    .url-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px solid #dfe1e6;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .url-input:focus {
+      outline: none;
+      border-color: #0052cc;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #7a869a;
+      margin-top: 8px;
       line-height: 1.4;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="header">
     <div class="logo">🏢</div>
-    <h1 class="title">Atlassian Companion</h1>
-    <p class="subtitle">Quick access to your Atlassian products</p>
-    
-    <div class="button-group">
-      <a href="#" class="btn btn-primary" id="loginBtn">Open Atlassian Login</a>
-      <a href="#" class="btn" id="jiraBtn">Open Jira</a>
-      <a href="#" class="btn" id="confluenceBtn">Open Confluence</a>
-      <a href="#" class="btn" id="bitbucketBtn">Open Bitbucket</a>
+    <div class="title">Atlassian Companion</div>
+    <div class="subtitle">Opera Sidebar Extension</div>
+  </div>
+  
+  <div class="content">
+    <div class="section">
+      <div class="section-title">Quick Access</div>
+      <div class="quick-links">
+        <button class="link-btn primary" onclick="openUrl('https://id.atlassian.com/login')">
+          🔐 Atlassian Login
+        </button>
+        <button class="link-btn" onclick="openUrl('https://start.atlassian.com/')">
+          🏠 Atlassian Start
+        </button>
+        <button class="link-btn" onclick="openUrl('https://www.atlassian.com/software/jira')">
+          📋 Jira Software
+        </button>
+        <button class="link-btn" onclick="openUrl('https://www.atlassian.com/software/confluence')">
+          📚 Confluence
+        </button>
+        <button class="link-btn" onclick="openUrl('https://bitbucket.org/')">
+          🔗 Bitbucket
+        </button>
+      </div>
     </div>
     
-    <p class="info">
-      Due to security restrictions, Atlassian cannot be embedded directly. 
-      Click the buttons above to open your Atlassian products in new tabs.
-    </p>
+    <div class="section">
+      <div class="section-title">Custom Instance</div>
+      <input type="text" class="url-input" id="customUrl" placeholder="Enter your company's Atlassian URL">
+      <button class="link-btn primary" onclick="openCustomUrl()">
+        🚀 Open Custom Instance
+      </button>
+      <div class="help-text">
+        Enter your organization's Atlassian URL (e.g., yourcompany.atlassian.net)
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Useful Information</div>
+      <div class="info-item">
+        <div class="info-icon">💡</div>
+        <div class="info-text">Links open in Opera's main browser window</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🔒</div>
+        <div class="info-text">Secure access to all Atlassian products</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">⚡</div>
+        <div class="info-text">Quick sidebar access while browsing</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div class="info-text">Compatible with Opera's security policies</div>
+      </div>
+    </div>
   </div>
 
   <script src="sidebar.js"></script>
